@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import catalogRoutes from "./routes/catalog.routes.js";
 import { authGuard } from "./middlewares/authGuard.js";
+import preferencesRoutes from "./routes/preferences.routes.js";
 import { q } from "./db.js";
 
 dotenv.config();
@@ -12,8 +13,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", 
-    credentials: true, 
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -23,6 +24,7 @@ app.get("/", (_req, res) => res.send("API OK"));
 
 app.use("/auth", authRoutes);
 app.use("/catalog", catalogRoutes);
+app.use("/preferences", preferencesRoutes);
 
 app.get("/me", authGuard, async (req, res) => {
   const { rows } = await q(

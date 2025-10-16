@@ -52,3 +52,11 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 
 ALTER TABLE users ADD COLUMN IF NOT EXISTS token_version INT NOT NULL DEFAULT 0;
 
+CREATE TABLE IF NOT EXISTS user_preferences (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  nombre TEXT NOT NULL,
+  sabor_preferido TEXT CHECK (sabor_preferido IN ('dulce', 'amargo', 'ácido', 'refrescante')),
+  con_alcohol BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
