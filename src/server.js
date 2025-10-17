@@ -7,6 +7,8 @@ import catalogRoutes from "./routes/catalog.routes.js";
 import { authGuard } from "./middlewares/authGuard.js";
 import preferencesRoutes from "./routes/preferences.routes.js";
 import { q } from "./db.js";
+import expertRoutes from "./routes/expert.routes.js";
+
 
 dotenv.config();
 const app = express();
@@ -24,7 +26,6 @@ app.get("/", (_req, res) => res.send("API OK"));
 
 app.use("/auth", authRoutes);
 app.use("/catalog", catalogRoutes);
-app.use("/preferences", preferencesRoutes);
 
 app.get("/me", authGuard, async (req, res) => {
   const { rows } = await q(
