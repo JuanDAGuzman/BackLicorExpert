@@ -26,6 +26,8 @@ app.get("/", (_req, res) => res.send("API OK"));
 
 app.use("/auth", authRoutes);
 app.use("/catalog", catalogRoutes);
+app.use("/preferences", preferencesRoutes);
+app.use("/expert", expertRoutes);
 
 app.get("/me", authGuard, async (req, res) => {
   const { rows } = await q(

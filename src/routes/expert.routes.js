@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { q } from "../db.js";
+import { authGuard } from "../middlewares/authGuard.js";
 
 const router = Router();
 
@@ -12,12 +13,12 @@ function ensureFacts(req, res) {
   return facts;
 }
 
-router.post("/recomendar", async (req, res) => {
+router.post("/recomendar", authGuard, async (req, res) => {
   try {
     const facts = ensureFacts(req, res);
     if (!facts) return;
 
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     const sql = `
       SELECT * 
@@ -86,7 +87,7 @@ router.post("/recomendar", async (req, res) => {
   }
 });
 
-router.post("/eval-pretty", async (req, res) => {
+router.post("/eval-pretty", authGuard, async (req, res) => {
   try {
     const facts = ensureFacts(req, res);
     if (!facts) return;
